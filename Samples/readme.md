@@ -26,7 +26,7 @@ The alert [Unfamiliar sign-in properties](https://docs.microsoft.com/en-us/azure
 
 Here is an example of what a triage assistance could look like:
 
-![Atypical diagramm](Images/unfamiliar-01.png)
+![Unfamiliar diagram](Images/Unfamiliar-01.png)
 
 **A**  The alert Unfamiliar sign-in properties is triggered for the user Verena. The IP of the unfamiliar connection comes along with the alert as well as the session ID (which is the Request ID in the Azure AD Sign in logs) and the user-agent-string of the client.  
 
