@@ -17,9 +17,16 @@ Here is an example of what a triage assistance could look like:
 
 **D**  Use the `Out of Office module` to check if the user has set an out of office message on its mailbox. If no messages are set, then we stop the automation, else we continue.
 
-**E**  We send an approval email to the user's manager. The manager will have one hour to provide input on the atypical location for the user.
+**E**  We send an approval email to the user's manager. The manager will have one hour to provide input on the atypical location for the user. This is what the email to Verena's manager will look like:
+
+![Atypical email](Images/Atypical-02.png)
 
 **F** If the manager doesn't answer within an hour, the automation stops. If the manager confirm the connection is suspicious we raise the severity of the incident to **High**. If the manager confirm that the location is legitimate (based on the personal knowledge) we lower the severity of the incident to **Low**. 
+
+Pre-requisites to deploy this sample:
+- x
+- y
+- z
 
 ## Unfamiliar sign-in properties triage
 The alert [Unfamiliar sign-in properties](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks) is provided by Azure AD Identity Protection. Its severity can vary.
