@@ -2,9 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workflows_ManagedIdTest_name": {
+        "PlaybookName": {
             "defaultValue": "ManagedIdTest",
             "type": "String"
+        },
+        "Identity": {
+            "defaultValue": "",
+            "type": "object"
         }
     },
     "variables": {},
@@ -12,7 +16,7 @@
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('workflows_ManagedIdTest_name')]",
+            "name": "[parameters('PlaybookName')]",
             "location": "[resourceGroup().location]",
             "identity": {
                 "type": "SystemAssigned"
