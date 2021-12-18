@@ -21,10 +21,10 @@
     "steps": [
         {
             "name": "idStep",
-            "label": "Deployment Type",
+            "label": "Identity Selector",
             "elements": [
                 {
-                    "name": "deployTextBlock2",
+                    "name": "TextBlock1",
                     "type": "Microsoft.Common.TextBlock",
                     "visible": true,
                     "options": {
@@ -36,9 +36,10 @@
                     "type": "Microsoft.Common.TextBox",
                     "label": "Playbook Name",
                     "placeholder": "",
-                    "defaultValue": "Base-Module",
+                    "defaultValue": "ManagedIdPlaybook",
                     "toolTip": "",
-                    "constraints": {}
+                    "constraints": {},
+                    "visible": true
                 },
                 {
                     "name": "identity",
@@ -62,7 +63,7 @@
     ],
     "outputs": {
         "PlaybookName": "[steps('idStep').PlaybookName]",
-        "Identity": "[steps('idStep').identity]"
-    },
-    "resourceTypes": []
+        "Identity": "[steps('idStep').identity]",
+        "location": "[location()]"
+    }
 }
