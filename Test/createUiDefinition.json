@@ -15,55 +15,55 @@
                     ]
                 }
             }
-        }
-    },
-    "basics": [],
-    "steps": [
-        {
-            "name": "idStep",
-            "label": "Identity Selector",
-            "elements": [
-                {
-                    "name": "TextBlock1",
-                    "type": "Microsoft.Common.TextBlock",
-                    "visible": true,
-                    "options": {
-                        "text": "Managed Id Test"
+        },
+        "basics": [],
+        "steps": [
+            {
+                "name": "idStep",
+                "label": "Identity Selector",
+                "elements": [
+                    {
+                        "name": "TextBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Managed Id Test"
+                        }
+                    },
+                    {
+                        "name": "PlaybookName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Playbook Name",
+                        "placeholder": "",
+                        "defaultValue": "ManagedIdPlaybook",
+                        "toolTip": "",
+                        "constraints": {},
+                        "visible": true
+                    },
+                    {
+                        "name": "identity",
+                        "type": "Microsoft.ManagedIdentity.IdentitySelector",
+                        "label": "Managed Identity Configuration",
+                        "toolTip": {
+                            "systemAssignedIdentity": "Enable system assigned identity to grant the resource access to other existing resources.",
+                            "userAssignedIdentity": "Add user assigned identities to grant the resource access to other existing resources."
+                        },
+                        "defaultValue": {
+                            "systemAssignedIdentity": "Off"
+                        },
+                        "options": {
+                            "hideSystemAssignedIdentity": false,
+                            "hideUserAssignedIdentity": false
+                        },
+                        "visible": true
                     }
-                },
-                {
-                    "name": "PlaybookName",
-                    "type": "Microsoft.Common.TextBox",
-                    "label": "Playbook Name",
-                    "placeholder": "",
-                    "defaultValue": "ManagedIdPlaybook",
-                    "toolTip": "",
-                    "constraints": {},
-                    "visible": true
-                },
-                {
-                    "name": "identity",
-                    "type": "Microsoft.ManagedIdentity.IdentitySelector",
-                    "label": "Managed Identity Configuration",
-                    "toolTip": {
-                        "systemAssignedIdentity": "Enable system assigned identity to grant the resource access to other existing resources.",
-                        "userAssignedIdentity": "Add user assigned identities to grant the resource access to other existing resources."
-                    },
-                    "defaultValue": {
-                        "systemAssignedIdentity": "Off"
-                    },
-                    "options": {
-                        "hideSystemAssignedIdentity": false,
-                        "hideUserAssignedIdentity": false
-                    },
-                    "visible": true
-                }
-            ]
+                ]
+            }
+        ],
+        "outputs": {
+            "PlaybookName": "[steps('idStep').PlaybookName]",
+            "Identity": "[steps('idStep').identity]",
+            "location": "[location()]"
         }
-    ],
-    "outputs": {
-        "PlaybookName": "[steps('idStep').PlaybookName]",
-        "Identity": "[steps('idStep').identity]",
-        "location": "[location()]"
     }
 }
