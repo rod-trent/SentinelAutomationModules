@@ -57,7 +57,7 @@
                         "Compose": {
                             "runAfter": {},
                             "type": "Compose",
-                            "inputs": "[coalesce(variables('userAssignedId'),null())]"
+                            "inputs": "[coalesce(variables('userAssignedId'),'12345')]"
                         },
                         "HTTP": {
                             "runAfter": {                                
