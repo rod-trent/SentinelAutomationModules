@@ -57,7 +57,7 @@
                         "Compose": {
                             "runAfter": {},
                             "type": "Compose",
-                            "inputs": "[variables('userAssignedId')]"
+                            "inputs": "[coalesce(variables('userAssignedId'),null())]"
                         },
                         "HTTP": {
                             "runAfter": {                                
@@ -69,7 +69,7 @@
                             "inputs": {
                                 "authentication": {
                                     "audience": "https://graph.microsoft.com",
-                                    "identity": "[variables('userAssignedId')]",
+                                    "identity": "[coalesce(variables('userAssignedId'),null())]",
                                     "type": "ManagedServiceIdentity"
                                 },
                                 "method": "GET",
