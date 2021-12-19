@@ -16,14 +16,23 @@
         }
     },
     "variables": {
-        "systemAssignedJson": {
-                "type": "SystemAssigned"
-            },
-        "userAssignedJson": {
+        "workflowSystemAssignedJson": {
+            "type": "SystemAssigned"
+        },
+        "workflowUserAssignedJson": {
             "type": "UserAssigned",
             "userAssignedIdentities": {
                 "[parameters('UserIdentityResourceId')]": {}
             }
+        },
+        "httpSystemAssignedAuth": {
+            "audience": "https://graph.microsoft.com",
+            "type": "ManagedServiceIdentity"
+        },
+        "httpUserAssignedAuth": {
+            "audience": "https://graph.microsoft.com",
+            "identity": "[parameters('UserIdentityResourceId')]",
+            "type": "ManagedServiceIdentity"
         }
     },
     "resources": [
@@ -32,7 +41,7 @@
             "apiVersion": "2017-07-01",
             "name": "[parameters('PlaybookName')]",
             "location": "[resourceGroup().location]",
-            "identity": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), variables('systemAssignedJson'), variables('userAssignedJson'))]",
+            "identity": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), variables('workflowSystemAssignedJson'), variables('workflowUserAssignedJson'))]",
             "properties": {
                 "state": "Disabled",
                 "definition": {
@@ -59,18 +68,14 @@
                             "inputs": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), '12345', parameters('UserIdentityResourceId'))]"
                         },
                         "HTTP": {
-                            "runAfter": {                                
+                            "runAfter": {
                                 "Compose": [
                                     "Succeeded"
-                                    ]
-                                },
+                                ]
+                            },
                             "type": "Http",
                             "inputs": {
-                                "authentication": {
-                                    "audience": "https://graph.microsoft.com",
-                                    "identity": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), null(), parameters('UserIdentityResourceId'))]",
-                                    "type": "ManagedServiceIdentity"
-                                },
+                                "authentication": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), variables('httpSystemAssignedAuth'), variables('httpUserAssignedAuth'))]",
                                 "method": "GET",
                                 "retryPolicy": {
                                     "type": "none"
