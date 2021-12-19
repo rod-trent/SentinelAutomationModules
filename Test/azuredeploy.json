@@ -12,19 +12,9 @@
         },
         "UserIdentityResourceId": {
             "type": "string"
-        },
-        "UserIdObject": {
-            "defaultValue": {
-                "type": "UserAssigned",
-                "userAssignedIdentities": {
-                    "id": {}
-                }
-            },
-            "type": "object"
         }
     },
     "variables": {
-        "managedIdResourceId": "[split(string(parameters('UserIdObject').userAssignedIdentities), '\"')[1]]",
         "systemAssignedJson": {
                 "type": "SystemAssigned"
             },
@@ -34,7 +24,7 @@
                 "[parameters('UserIdentityResourceId')]": {}
             }
         },
-        "objectVar": "[parameters('UserIdObject')]"
+        "userAssignedId": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), null(), parameters('UserIdentityResourceId'))]"
     },
     "resources": [
         {
@@ -66,7 +56,7 @@
                         "Compose": {
                             "runAfter": {},
                             "type": "Compose",
-                            "inputs": "[variables('managedIdResourceId')]"
+                            "inputs": "[variables('userAssignedId')]"
                         },
                         "HTTP": {
                             "runAfter": {                                
@@ -78,7 +68,7 @@
                             "inputs": {
                                 "authentication": {
                                     "audience": "https://graph.microsoft.com",
-                                    "identity": "[parameters('UserIdentityResourceId')]",
+                                    "identity": "[variables('userAssignedId')]",
                                     "type": "ManagedServiceIdentity"
                                 },
                                 "method": "GET",
