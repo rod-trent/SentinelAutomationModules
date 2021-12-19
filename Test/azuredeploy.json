@@ -24,8 +24,7 @@
             "userAssignedIdentities": {
                 "[parameters('UserIdentityResourceId')]": {}
             }
-        },
-        "userAssignedId": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), null(), parameters('UserIdentityResourceId'))]"
+        }
     },
     "resources": [
         {
@@ -57,7 +56,7 @@
                         "Compose": {
                             "runAfter": {},
                             "type": "Compose",
-                            "inputs": "[coalesce(variables('userAssignedId'),'12345')]"
+                            "inputs": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), '12345', parameters('UserIdentityResourceId'))]"
                         },
                         "HTTP": {
                             "runAfter": {                                
@@ -69,7 +68,7 @@
                             "inputs": {
                                 "authentication": {
                                     "audience": "https://graph.microsoft.com",
-                                    "identity": "[coalesce(variables('userAssignedId'),null())]",
+                                    "identity": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), null(), parameters('UserIdentityResourceId'))]",
                                     "type": "ManagedServiceIdentity"
                                 },
                                 "method": "GET",
