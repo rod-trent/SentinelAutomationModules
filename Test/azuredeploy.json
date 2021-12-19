@@ -42,7 +42,7 @@
             "apiVersion": "2017-07-01",
             "name": "[parameters('PlaybookName')]",
             "location": "[resourceGroup().location]",
-            "identity": "[variables('userAssignedJson')]",
+            "identity": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), variables('systemAssignedJson'), variables('userAssignedJson'))]",
             "properties": {
                 "state": "Disabled",
                 "definition": {
