@@ -31,7 +31,7 @@
         "userAssignedJson": {
             "type": "UserAssigned",
             "userAssignedIdentities": {
-                "id": {}
+                "[parameters('UserIdentityResourceId')]": {}
             }
         },
         "objectVar": "[parameters('UserIdObject')]"
@@ -42,7 +42,7 @@
             "apiVersion": "2017-07-01",
             "name": "[parameters('PlaybookName')]",
             "location": "[resourceGroup().location]",
-            "identity": "[variables('objectVar')]",
+            "identity": "[variables('userAssignedJson')]",
             "properties": {
                 "state": "Disabled",
                 "definition": {
@@ -78,7 +78,7 @@
                             "inputs": {
                                 "authentication": {
                                     "audience": "https://graph.microsoft.com",
-                                    "identity": "[variables('managedIdResourceId')]",
+                                    "identity": "[parameters('UserIdentityResourceId')]",
                                     "type": "ManagedServiceIdentity"
                                 },
                                 "method": "GET",
