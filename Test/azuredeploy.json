@@ -6,21 +6,43 @@
             "defaultValue": "ManagedIdTest",
             "type": "String"
         },
-        "Identity": {
-            "defaultValue": "",
+        "IdentityType": {
+            "defaultValue": "SystemAssigned",
+            "type": "string"
+        },
+        "UserIdentityResourceId": {
+            "type": "string"
+        },
+        "UserIdObject": {
+            "defaultValue": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "id": {}
+                }
+            },
             "type": "object"
         }
     },
-    "variables": {},
+    "variables": {
+        "managedIdResourceId": "[split(string(parameters('UserIdObject').userAssignedIdentities), '\"')[1]]",
+        "systemAssignedJson": {
+                "type": "SystemAssigned"
+            },
+        "userAssignedJson": {
+            "type": "UserAssigned",
+            "userAssignedIdentities": {
+                "id": {}
+            }
+        },
+        "objectVar": "[parameters('UserIdObject')]"
+    },
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
             "name": "[parameters('PlaybookName')]",
             "location": "[resourceGroup().location]",
-            "identity": {
-                "type": "SystemAssigned"
-            },
+            "identity": "[variables('objectVar')]",
             "properties": {
                 "state": "Disabled",
                 "definition": {
@@ -41,16 +63,29 @@
                         }
                     },
                     "actions": {
-                        "HTTP": {
+                        "Compose": {
                             "runAfter": {},
+                            "type": "Compose",
+                            "inputs": "[variables('managedIdResourceId')]"
+                        },
+                        "HTTP": {
+                            "runAfter": {                                
+                                "Compose": [
+                                    "Succeeded"
+                                    ]
+                                },
                             "type": "Http",
                             "inputs": {
                                 "authentication": {
-                                    "audience": "https://graph.sentineltest.xyz",
+                                    "audience": "https://graph.microsoft.com",
+                                    "identity": "[variables('managedIdResourceId')]",
                                     "type": "ManagedServiceIdentity"
                                 },
                                 "method": "GET",
-                                "uri": "https://graph.sentineltest.xyz/v1.0/users"
+                                "retryPolicy": {
+                                    "type": "none"
+                                },
+                                "uri": "https://graph.microsoft.com/v1.0/users/briandel@briandel.com"
                             }
                         }
                     },
