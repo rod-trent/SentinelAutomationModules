@@ -62,17 +62,8 @@
                         }
                     },
                     "actions": {
-                        "Compose": {
-                            "runAfter": {},
-                            "type": "Compose",
-                            "inputs": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), '12345', parameters('UserIdentityResourceId'))]"
-                        },
                         "HTTP": {
-                            "runAfter": {
-                                "Compose": [
-                                    "Succeeded"
-                                ]
-                            },
+                            "runAfter": {},
                             "type": "Http",
                             "inputs": {
                                 "authentication": "[if(equals(parameters('IdentityType'), 'SystemAssigned'), variables('httpSystemAssignedAuth'), variables('httpUserAssignedAuth'))]",
