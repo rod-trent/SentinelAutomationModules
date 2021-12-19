@@ -41,6 +41,40 @@
                         "visible": true
                     },
                     {
+                        "name": "idType",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Select a type of Managed Identity",
+                        "defaultValue": "System Assigned",
+                        "toolTip": "",
+                        "constraints": {
+                          "allowedValues": [
+                            {
+                              "label": "System Assigned",
+                              "value": "SystemAssigned"
+                            },
+                            {
+                              "label": "User Assigned",
+                              "value": "UserAssigned"
+                            }
+                          ],
+                          "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "idSelector",
+                        "type": "Microsoft.Solutions.ResourceSelector",
+                        "label": "Select a User Assigned Managed Identity",
+                        "resourceType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                        "options": {
+                            "filter": {
+                                "subscription": "onBasics",
+                                "location": "onBasics"
+                            }
+                        },
+                        "visible": "[if(equals(steps('idStep').idType, 'UserAssigned'), true, false)]"
+                    },
+                    {
                         "name": "identity",
                         "type": "Microsoft.ManagedIdentity.IdentitySelector",
                         "label": "Managed Identity Configuration",
@@ -55,14 +89,15 @@
                             "hideSystemAssignedIdentity": false,
                             "hideUserAssignedIdentity": false
                         },
-                        "visible": true
+                        "visible": false
                     }
                 ]
             }
         ],
         "outputs": {
             "PlaybookName": "[steps('idStep').PlaybookName]",
-            "Identity": "[steps('idStep').identity]",
+            "IdentityType": "[steps('idStep').idType]",
+            "UserIdentityResourceId": "[steps('idStep').idSelector.id]",
             "location": "[location()]"
         }
     }
