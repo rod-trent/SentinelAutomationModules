@@ -7,7 +7,7 @@ This Azure function will be used by some of the Sentinel automation modules to a
 
 ## Trigger Parameters
 
-Trigger name: **process**
+Trigger name: **processdata**
 
 The following properties are required for all actions performed by this function:
 
