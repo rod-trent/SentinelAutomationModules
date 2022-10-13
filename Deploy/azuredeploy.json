@@ -70,6 +70,10 @@
             "defaultValue": "STAT-Coordinator",
             "type": "String"
         },
+        "STATFunctionName": {
+            "defaultValue": "statapi",
+            "type": "String"
+        },
         "CustomConnectorName": {
             "defaultValue": "SentinelTriageAssistant",
             "type": "String"
@@ -103,6 +107,7 @@
         "BaseTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/BaseModule/azuredeploy.json",
         "BasicSampleTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Samples/basicsample.json",
         "ConnectorTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Connector/azuredeploy.json",
+        "FunctionTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Function/azuredeploy.json",
         "WorkbookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Workbook/azuredeploy.json"
     },
     "resources": [
@@ -110,6 +115,9 @@
             "apiVersion": "2019-10-01",
             "name": "BaseTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -127,6 +135,9 @@
             "apiVersion": "2019-10-01",
             "name": "KQLTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -144,6 +155,9 @@
             "apiVersion": "2019-10-01",
             "name": "ScoringTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -153,6 +167,23 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('ScoringPlaybookName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2019-10-01",
+            "name": "FunctionTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('FunctionTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "FunctionName": {
+                        "value": "[parameters('STATFunctionName')]"
                     }
                 }
             }

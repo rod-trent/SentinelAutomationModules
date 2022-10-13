@@ -249,6 +249,16 @@
                                 "visible": true
                             },
                             {
+                                "name": "STATFunctionName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "STAT Function Name",
+                                "placeholder": "",
+                                "defaultValue": "statapi",
+                                "toolTip": "",
+                                "constraints": {},
+                                "visible": true
+                            },
+                            {
                                 "name": "TIPlaybookName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Threat Intelligence Playbook Name",
@@ -429,6 +439,7 @@
             "DeployConnector": "[coalesce(steps('automationModules').advancedSetup.DeployConnector,steps('automationModules').standardSetup.DeployConnector)]",
             "WorkbookName": "[coalesce(steps('automationModules').advancedSetup.WorkbookDisplayName,'Sentinel Triage AssistanT - Status')]",
             "DeployWorkbook": "[coalesce(steps('automationModules').advancedSetup.DeployWorkbook, steps('automationModules').standardSetup.DeployConnector)]",
+            "STATFunctionName": "[coalesce(steps('automationModules').advancedSetup.STATFunctionName,'statapi')]",
             "location": "[location()]"
         }
     }
