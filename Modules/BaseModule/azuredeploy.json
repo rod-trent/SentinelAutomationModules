@@ -5,6 +5,10 @@
         "PlaybookName": {
             "defaultValue": "Base-Module",
             "type": "String"
+        },
+        "STATFunctionResourceId": {
+            "defaultValue": "",
+            "type": "string"
         }
     },
     "variables": {
@@ -53,7 +57,7 @@
                             "type": "Object"
                         },
                         "PlaybookVersion": {
-                            "defaultValue": "0.4.0",
+                            "defaultValue": "0.4.1",
                             "type": "String"
                         },
                         "PlaybookInternalName": {
@@ -905,7 +909,7 @@
                                         },
                                         "Append_to_IPArray_With_GeoData": {
                                             "runAfter": {
-                                                "HTTP_-_Get_Geo_Data": [
+                                                "Title_Case_Data": [
                                                     "Succeeded"
                                                 ]
                                             },
@@ -914,7 +918,7 @@
                                                 "name": "IPArray",
                                                 "value": {
                                                     "Address": "@{items('For_each_ip')['properties']['address']}",
-                                                    "GeoData": "@body('HTTP_-_Get_Geo_Data')",
+                                                    "GeoData": "@body('Title_Case_Data')",
                                                     "RawEntity": "@items('For_each_ip')['properties']"
                                                 }
                                             }
@@ -928,7 +932,7 @@
                                             "type": "AppendToArrayVariable",
                                             "inputs": {
                                                 "name": "IPComment",
-                                                "value": "@body('HTTP_-_Get_Geo_Data')"
+                                                "value": "@body('Title_Case_Data')"
                                             }
                                         },
                                         "HTTP_-_Get_Geo_Data": {
@@ -945,6 +949,35 @@
                                                     "ipaddress": "@{items('For_each_ip')['properties']['address']}"
                                                 },
                                                 "uri": "https://management.azure.com@{split(triggerBody()?['IncidentARMId'], '/providers/')[0]}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata/"
+                                            }
+                                        },
+                                        "Title_Case_Data": {
+                                            "runAfter": {
+                                                "HTTP_-_Get_Geo_Data": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Function",
+                                            "inputs": {
+                                                "body": {
+                                                    "action": "changePropertyCase",
+                                                    "case": "title",
+                                                    "data": "@body('HTTP_-_Get_Geo_Data')",
+                                                    "properties": [
+                                                        "carrier",
+                                                        "city",
+                                                        "continent",
+                                                        "country",
+                                                        "organization",
+                                                        "organizationType",
+                                                        "region",
+                                                        "state",
+                                                        "stateCode"
+                                                    ]
+                                                },
+                                                "function": {
+                                                    "id": "[concat(parameters('STATFunctionResourceId'), '/functions/processdata')]"
+                                                }
                                             }
                                         }
                                     },

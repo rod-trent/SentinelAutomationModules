@@ -127,6 +127,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('BasePlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }

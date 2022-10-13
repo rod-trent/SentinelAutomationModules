@@ -29,6 +29,16 @@ Action Specific Properties:
 |sortorder|False|asc (ascending) or desc (descending) search order. Default is ascending|
 |sortkeys|True|An array of keys to sort the data by. (Ex. ["id","name"] will sort first by id, and then name|
 
+#### changePropertyCase
+
+This action will change the case of properties in a JSON object
+
+Action Specific Properties:
+
+|Property|Mandatory|Description|
+|---|---|---|
+|properties|True|An array of properties in the JSON object to change the casing on|
+|case|True|The type of case change operation you want to perform (upper, lower, or title)|
 
 ## Return Properties
 
