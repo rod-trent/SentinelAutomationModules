@@ -5,6 +5,10 @@
         "PlaybookName": {
             "defaultValue": "Calculate-RiskScore",
             "type": "string"
+        },
+        "STATFunctionResourceId": {
+            "defaultValue": "",
+            "type": "string"
         }
     },
     "variables": {
@@ -53,7 +57,7 @@
                             "type": "Object"
                         },
                         "PlaybookVersion": {
-                            "defaultValue": "0.0.6",
+                            "defaultValue": "0.0.7",
                             "type": "String"
                         },
                         "PlaybookInternalName": {
@@ -129,25 +133,16 @@
                                             }
                                         },
                                         "Detailed_Results_Table": {
-                                            "runAfter": {
-                                                "TEMP_-_Sort_Query": [
-                                                    "Succeeded"
-                                                ]
-                                            },
+                                            "runAfter": {},
                                             "type": "Table",
                                             "inputs": {
                                                 "format": "HTML",
-                                                "from": "@variables('DetailedResults')"
+                                                "from": "@body('Sort_DetailedResults')"
                                             }
-                                        },
-                                        "TEMP_-_Sort_Query": {
-                                            "runAfter": {},
-                                            "type": "Compose",
-                                            "inputs": "//Potential KQL query to sort output\n\nlet tableData = @'@{replace(string(variables('DetailedResults')), '''', '''''')}';\nlet tableEntries = datatable(temp:string)['']\n| extend Entries = parse_json(tableData)\n| mv-expand todynamic(Entries)\n| project Score = todecimal(Entries.Score), ScoreSource = tostring(Entries.ScoreSource)\n| sort by Score, ScoreSource desc;\ntableEntries"
                                         }
                                     },
                                     "runAfter": {
-                                        "DEBUG_-_Final_Score": [
+                                        "Sort_DetailedResults": [
                                             "Succeeded"
                                         ]
                                     },
@@ -182,10 +177,31 @@
                                     "kind": "Http",
                                     "inputs": {
                                         "body": {
-                                            "DetailedResults": "@variables('DetailedResults')",
+                                            "DetailedResults": "@body('Sort_DetailedResults')",
                                             "TotalScore": "@variables('scoreTotal')"
                                         },
                                         "statusCode": 200
+                                    }
+                                },
+                                "Sort_DetailedResults": {
+                                    "runAfter": {
+                                        "DEBUG_-_Final_Score": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Function",
+                                    "inputs": {
+                                        "body": {
+                                            "action": "sortObjectArray",
+                                            "data": "@variables('DetailedResults')",
+                                            "sortkeys": [
+                                                "Score"
+                                            ],
+                                            "sortorder": "desc"
+                                        },
+                                        "function": {
+                                            "id": "[concat(parameters('STATFunctionResourceId'), '/functions/processdata')]"
+                                        }
                                     }
                                 }
                             },

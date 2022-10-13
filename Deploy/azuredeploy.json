@@ -92,23 +92,23 @@
         }
     },
     "variables": {
-        "OOFTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/OOFModule/azuredeploy.json",
-        "RelatedAlertsTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/RelatedAlerts/azuredeploy.json",
-        "UEBATemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/UEBAModule/azuredeploy.json",
-        "MCASTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/MCASModule/azuredeploy.json",
-        "MDETemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/MDEModule/azuredeploy.json",
-        "AADTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/AADRisksModule/azuredeploy.json",
-        "WatchlistTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/WatchlistModule/azuredeploy.json",
-        "FileTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/FileModule/azuredeploy.json",
-        "RunPlaybookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/RunPlaybook/azuredeploy.json",
-        "KQLTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/KQLModule/azuredeploy.json",
-        "TITemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/TIModule/azuredeploy.json",
-        "ScoringTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/ScoringModule/azuredeploy.json",
-        "BaseTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Modules/BaseModule/azuredeploy.json",
-        "BasicSampleTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Samples/basicsample.json",
-        "ConnectorTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Connector/azuredeploy.json",
-        "FunctionTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Function/azuredeploy.json",
-        "WorkbookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/main/Workbook/azuredeploy.json"
+        "OOFTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/OOFModule/azuredeploy.json",
+        "RelatedAlertsTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/RelatedAlerts/azuredeploy.json",
+        "UEBATemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/UEBAModule/azuredeploy.json",
+        "MCASTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/MCASModule/azuredeploy.json",
+        "MDETemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/MDEModule/azuredeploy.json",
+        "AADTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/AADRisksModule/azuredeploy.json",
+        "WatchlistTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/WatchlistModule/azuredeploy.json",
+        "FileTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/FileModule/azuredeploy.json",
+        "RunPlaybookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/RunPlaybook/azuredeploy.json",
+        "KQLTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/KQLModule/azuredeploy.json",
+        "TITemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/TIModule/azuredeploy.json",
+        "ScoringTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/ScoringModule/azuredeploy.json",
+        "BaseTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/BaseModule/azuredeploy.json",
+        "BasicSampleTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Samples/basicsample.json",
+        "ConnectorTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Connector/azuredeploy.json",
+        "FunctionTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Function/azuredeploy.json",
+        "WorkbookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Workbook/azuredeploy.json"
     },
     "resources": [
         {
@@ -147,6 +147,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('KQLPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -167,6 +170,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('ScoringPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
