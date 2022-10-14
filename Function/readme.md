@@ -29,6 +29,12 @@ Action Specific Properties:
 |sortorder|False|asc (ascending) or desc (descending) search order. Default is ascending|
 |sortkeys|True|An array of keys to sort the data by. (Ex. ["id","name"] will sort first by id, and then name|
 
+#### processSentinelData
+
+This action will take the Log Analytics Query API output and process it into a single array of objects with the property name as the column header and the value as the row data.  By default, this API returns 2 arrays, one of column headers and another with row data which is difficult to consume in a Logic App.
+
+No action specific properties are needed for this action.
+
 #### changePropertyCase
 
 This action will change the case of properties in a JSON object
