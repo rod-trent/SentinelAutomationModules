@@ -5,6 +5,10 @@
         "PlaybookName": {
             "defaultValue": "Run-KQLQuery",
             "type": "String"
+        },
+        "STATFunctionResourceId": {
+            "defaultValue": "",
+            "type": "string"
         }
     },
     "variables": {
@@ -53,7 +57,7 @@
                             "type": "Object"
                         },
                         "PlaybookVersion": {
-                            "defaultValue": "0.1.4",
+                            "defaultValue": "0.1.5",
                             "type": "String"
                         },
                         "PlaybookInternalName": {
@@ -112,7 +116,7 @@
                                     "inputs": {
                                         "body": {
                                             "incidentArmId": "@body('Parse_JSON')?['IncidentARMId']",
-                                            "message": "<p>@{if(not(equals(triggerBody()?['QueryDescription'], null)), concat(triggerBody()?['QueryDescription'], '<p>'),null)}A total of @{variables('ResultCount')} records were found in a @{triggerBody()?['RunQueryAgainst']} search.<br>\n@{take(body('Create_HTML_table'), 28000)}@{if(equals(body('Parse_JSON')?['ModuleVersions']?['KQLModule'], null), '', if(not(equals(body('Parse_JSON')?['ModuleVersions']?['KQLModule'], parameters('PlaybookVersion'))), concat('<br>Sentinel Triage AssistanT - KQL Module Update Available: Installed Version: ', parameters('PlaybookVersion'), ', Available Version: ', body('Parse_JSON')?['ModuleVersions']?['KQLModule']), ''))}</p>"
+                                            "message": "<p>@{if(not(equals(triggerBody()?['QueryDescription'], null)), concat(triggerBody()?['QueryDescription'], '<p>'),null)}A total of @{variables('ResultCount')} records were found in a @{triggerBody()?['RunQueryAgainst']} search.<br>\n@{take(body('Create_HTML_table'), 28000)}</p>"
                                         },
                                         "host": {
                                             "connection": {
@@ -763,7 +767,7 @@
                                             "type": "SetVariable",
                                             "inputs": {
                                                 "name": "Records",
-                                                "value": "@take(body('HTTP_-_M365')['Results'], 10)"
+                                                "value": "@take(body('HTTP_-_M365')['Results'], 20)"
                                             }
                                         },
                                         "Set_variable_-_ResultCount": {
@@ -786,31 +790,7 @@
                                         "Compose_-_Sentinel_Query": {
                                             "runAfter": {},
                                             "type": "Compose",
-                                            "inputs": "let accountData = @'@{replace(string(body('Select_-_Accounts_Array')), '''', '''''')}';\nlet ipData = @'@{replace(string(body('Select_-_IP_Array')), '''', '''''')}';\nlet hostData = @'@{replace(string(body('Select_-_Hosts_Array')), '''', '''''')}';\nlet incidentArmId = '@{body('Parse_JSON')?['IncidentARMId']}';\nlet accountEntities = datatable(temp:string)['']\n| extend Entities = parse_json(accountData)\n| mv-expand todynamic(Entities)\n| project UserPrincipalName = tostring(Entities.userPrincipalName), SamAccountName = tostring(Entities.onPremisesSamAccountName), ObjectSID = tostring(Entities.onPremisesSecurityIdentifier), AADUserId = tostring(Entities.id), ManagerUPN = tostring(Entities.managerUPN);\nlet ipEntities = datatable(temp:string)['']\n| extend Entities = parse_json(ipData)\n| mv-expand todynamic(Entities)\n| project IPAddress = tostring(Entities.Address), Latitude = todecimal(Entities.Latitude), Longitude = todecimal(Entities.Longitude), Country=tostring(Entities.Country), State=tostring(Entities.State);\nlet hostEntities = datatable(temp:string)['']\n| extend Entities = parse_json(hostData)\n| mv-expand todynamic(Entities)\n| project FQDN = tostring(Entities.FQDN), Hostname = tostring(Entities.Hostname);\n@{triggerBody()?['KQLQuery']}\n| extend STATResponse = pack_all()\n| project STATResponse\n\n"
-                                        },
-                                        "For_each": {
-                                            "foreach": "@take(body('HTTP_-_Sentinel')['tables'][0]['rows'], 10)",
-                                            "actions": {
-                                                "Append_to_array_variable": {
-                                                    "runAfter": {},
-                                                    "type": "AppendToArrayVariable",
-                                                    "inputs": {
-                                                        "name": "Records",
-                                                        "value": "@json(item()[0])"
-                                                    }
-                                                }
-                                            },
-                                            "runAfter": {
-                                                "HTTP_-_Sentinel": [
-                                                    "Succeeded"
-                                                ]
-                                            },
-                                            "type": "Foreach",
-                                            "runtimeConfiguration": {
-                                                "concurrency": {
-                                                    "repetitions": 1
-                                                }
-                                            }
+                                            "inputs": "let accountData = @'@{replace(string(body('Select_-_Accounts_Array')), '''', '''''')}';\nlet ipData = @'@{replace(string(body('Select_-_IP_Array')), '''', '''''')}';\nlet hostData = @'@{replace(string(body('Select_-_Hosts_Array')), '''', '''''')}';\nlet incidentArmId = '@{body('Parse_JSON')?['IncidentARMId']}';\nlet accountEntities = datatable(temp:string)['']\n| extend Entities = parse_json(accountData)\n| mv-expand todynamic(Entities)\n| project UserPrincipalName = tostring(Entities.userPrincipalName), SamAccountName = tostring(Entities.onPremisesSamAccountName), ObjectSID = tostring(Entities.onPremisesSecurityIdentifier), AADUserId = tostring(Entities.id), ManagerUPN = tostring(Entities.managerUPN);\nlet ipEntities = datatable(temp:string)['']\n| extend Entities = parse_json(ipData)\n| mv-expand todynamic(Entities)\n| project IPAddress = tostring(Entities.Address), Latitude = todecimal(Entities.Latitude), Longitude = todecimal(Entities.Longitude), Country=tostring(Entities.Country), State=tostring(Entities.State);\nlet hostEntities = datatable(temp:string)['']\n| extend Entities = parse_json(hostData)\n| mv-expand todynamic(Entities)\n| project FQDN = tostring(Entities.FQDN), Hostname = tostring(Entities.Hostname);\n@{triggerBody()?['KQLQuery']}\n//| extend STATResponse = pack_all()\n//| project STATResponse\n\n"
                                         },
                                         "HTTP_-_Sentinel": {
                                             "runAfter": {
@@ -830,6 +810,23 @@
                                                 },
                                                 "method": "POST",
                                                 "uri": "https://api.loganalytics.io/v1/workspaces/@{body('Parse_JSON')?['WorkspaceId']}/query"
+                                            }
+                                        },
+                                        "Process_Query_Results": {
+                                            "runAfter": {
+                                                "HTTP_-_Sentinel": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Function",
+                                            "inputs": {
+                                                "body": {
+                                                    "action": "processSentinelData",
+                                                    "data": "@body('HTTP_-_Sentinel')"
+                                                },
+                                                "function": {
+                                                    "id": "[concat(parameters('STATFunctionResourceId'), '/functions/processdata')]"
+                                                }
                                             }
                                         },
                                         "Response": {
@@ -852,9 +849,21 @@
                                                 "statusCode": "@outputs('HTTP_-_Sentinel')['statusCode']"
                                             }
                                         },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Process_Query_Results": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "Records",
+                                                "value": "@take(body('Process_Query_Results'), 20)"
+                                            }
+                                        },
                                         "Set_variable_-_ResultCount_2": {
                                             "runAfter": {
-                                                "For_each": [
+                                                "Set_variable": [
                                                     "Succeeded"
                                                 ]
                                             },
