@@ -150,6 +150,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('KQLPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
