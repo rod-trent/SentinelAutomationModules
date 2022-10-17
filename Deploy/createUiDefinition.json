@@ -437,7 +437,7 @@
             "STATCoordinatorPlaybookName": "[coalesce(steps('automationModules').advancedSetup.STATCoordinatorPlaybookName,'STAT-Coordinator')]",
             "CustomConnectorName": "[coalesce(steps('automationModules').advancedSetup.CustomConnectorName,'SentinelTriageAssistant')]",
             "CustomConnectorDisplayName": "[coalesce(steps('automationModules').advancedSetup.CustomConnectorDisplayName,'Sentinel Triage AssistanT - STAT')]",
-            "DeployConnector": "[coalesce(steps('automationModules').advancedSetup.DeployConnector,steps('automationModules').standardSetup.DeployConnector)]",
+            "DeployConnector": true,
             "WorkbookName": "[coalesce(steps('automationModules').advancedSetup.WorkbookDisplayName,'Sentinel Triage AssistanT - Status')]",
             "DeployWorkbook": "[coalesce(steps('automationModules').advancedSetup.DeployWorkbook, steps('automationModules').standardSetup.DeployConnector)]",
             "STATFunctionName": "[coalesce(steps('automationModules').advancedSetup.STATFunctionName,'statapi')]",
