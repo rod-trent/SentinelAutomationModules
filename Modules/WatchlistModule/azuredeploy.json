@@ -5,6 +5,10 @@
         "PlaybookName": {
             "defaultValue": "Get-WatchlistInsights",
             "type": "String"
+        },
+        "STATFunctionResourceId": {
+            "defaultValue": "",
+            "type": "string"
         }
     },
     "variables": {
@@ -845,6 +849,10 @@
         "resourceID": {
             "type": "string",
             "value": "[resourceId('Microsoft.Logic/workflows', parameters('PlaybookName'))]"
+        },
+        "temp": {
+            "type": "string",
+            "value": "[parameters('STATFunctionResourceId')]"
         }
     }
 }

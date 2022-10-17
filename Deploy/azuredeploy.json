@@ -226,6 +226,9 @@
             "apiVersion": "2019-10-01",
             "name": "TITemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -235,6 +238,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('TIPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -243,6 +249,9 @@
             "apiVersion": "2019-10-01",
             "name": "FileTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -252,6 +261,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('FilePlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -260,6 +272,9 @@
             "apiVersion": "2019-10-01",
             "name": "OOFTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -269,6 +284,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('OOFPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -277,6 +295,9 @@
             "apiVersion": "2019-10-01",
             "name": "WatchlistTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -286,6 +307,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('WatchlistPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -294,6 +318,9 @@
             "apiVersion": "2019-10-01",
             "name": "AADTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -303,6 +330,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('AADRisksPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -311,6 +341,9 @@
             "apiVersion": "2019-10-01",
             "name": "MCASTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -320,6 +353,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('MCASPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -328,6 +364,9 @@
             "apiVersion": "2019-10-01",
             "name": "UEBATemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -337,6 +376,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('UEBAPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -345,6 +387,9 @@
             "apiVersion": "2019-10-01",
             "name": "MDETemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -354,6 +399,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('MDEPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
@@ -362,6 +410,9 @@
             "apiVersion": "2019-10-01",
             "name": "RelatedAlertsTemplate",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'FunctionTemplate')]"
+            ],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -371,6 +422,9 @@
                 "parameters": {
                     "PlaybookName": {
                         "value": "[parameters('RelatedAlertsPlaybookName')]"
+                    },
+                    "STATFunctionResourceId": {
+                        "value": "[reference('FunctionTemplate').outputs.resourceID.value]"
                     }
                 }
             }
