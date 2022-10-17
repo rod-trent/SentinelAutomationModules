@@ -46,6 +46,16 @@ Action Specific Properties:
 |properties|True|An array of properties in the JSON object to change the casing on|
 |case|True|The type of case change operation you want to perform (upper, lower, or title)|
 
+#### returnHighestItem
+
+This action will process an array of data and return the *highest* as a string. This is useful when you have an array of severities (high, medium, low) and you want to return the highest severity in the array.
+
+Action Specific Properties:
+
+|Property|Mandatory|Description|
+|---|---|---|
+|orderedList|False|An array of potential values in the order of severity (highest to lowest).  If this is not provided a default of ['High','Medium','Low','Informational','Unknown'] is used|
+
 ## Return Properties
 
 |Property|Description|

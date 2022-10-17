@@ -5,13 +5,16 @@
         "FunctionName": {
             "defaultValue": "statapi",
             "type": "string"
+        },
+        "FunctionPackage": {
+            "defaultValue": "https://github.com/briandelmsft/SentinelAutomationModules/blob/main/Function/statapi.zip?raw=true",
+            "type": "string"
         }
     },
     "variables": {
         "storageName": "[toLower(concat(parameters('FunctionName'), uniqueString(resourceGroup().id)))]",
         "functionName": "[toLower(concat(parameters('FunctionName'), '-', uniqueString(resourceGroup().id)))]",
-        "aspName": "[toLower(concat(parameters('FunctionName'), '-ASP'))]",
-        "functionZipLocation": "https://github.com/briandelmsft/SentinelAutomationModules/blob/function_dev/Function/statapi.zip?raw=true"
+        "aspName": "[toLower(concat(parameters('FunctionName'), '-ASP'))]"
     },
     "resources": [
         {
@@ -179,7 +182,7 @@
                         "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2019-06-01').keys[0].value, ';EndpointSuffix=core.windows.net')]",
                         "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageName'),';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2019-06-01').keys[0].value, ';EndpointSuffix=core.windows.net')]",
                         "WEBSITE_CONTENTSHARE": "[variables('storageName')]",
-                        "WEBSITE_RUN_FROM_PACKAGE": "[variables('functionZipLocation')]"
+                        "WEBSITE_RUN_FROM_PACKAGE": "[parameters('FunctionPackage')]"
                     }
                 }
             ]

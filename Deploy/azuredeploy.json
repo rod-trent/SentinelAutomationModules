@@ -89,26 +89,31 @@
         "DeployWorkbook": {
             "defaultValue": true,
             "type": "bool"
+        },
+        "DeploymentBranch": {
+            "defaultValue": "main",
+            "type": "String"
         }
     },
     "variables": {
-        "OOFTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/OOFModule/azuredeploy.json",
-        "RelatedAlertsTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/RelatedAlerts/azuredeploy.json",
-        "UEBATemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/UEBAModule/azuredeploy.json",
-        "MCASTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/MCASModule/azuredeploy.json",
-        "MDETemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/MDEModule/azuredeploy.json",
-        "AADTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/AADRisksModule/azuredeploy.json",
-        "WatchlistTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/WatchlistModule/azuredeploy.json",
-        "FileTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/FileModule/azuredeploy.json",
-        "RunPlaybookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/RunPlaybook/azuredeploy.json",
-        "KQLTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/KQLModule/azuredeploy.json",
-        "TITemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/TIModule/azuredeploy.json",
-        "ScoringTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/ScoringModule/azuredeploy.json",
-        "BaseTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Modules/BaseModule/azuredeploy.json",
-        "BasicSampleTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Samples/basicsample.json",
-        "ConnectorTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Connector/azuredeploy.json",
-        "FunctionTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Function/azuredeploy.json",
-        "WorkbookTemplate": "https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/function_dev/Workbook/azuredeploy.json"
+        "OOFTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/OOFModule/azuredeploy.json')]",
+        "RelatedAlertsTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/RelatedAlerts/azuredeploy.json')]",
+        "UEBATemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/UEBAModule/azuredeploy.json')]",
+        "MCASTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/MCASModule/azuredeploy.json')]",
+        "MDETemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/MDEModule/azuredeploy.json')]",
+        "AADTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/AADRisksModule/azuredeploy.json')]",
+        "WatchlistTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/WatchlistModule/azuredeploy.json')]",
+        "FileTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/FileModule/azuredeploy.json')]",
+        "RunPlaybookTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/RunPlaybook/azuredeploy.json')]",
+        "KQLTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/KQLModule/azuredeploy.json')]",
+        "TITemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/TIModule/azuredeploy.json')]",
+        "ScoringTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/ScoringModule/azuredeploy.json')]",
+        "BaseTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Modules/BaseModule/azuredeploy.json')]",
+        "BasicSampleTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Samples/basicsample.json')]",
+        "ConnectorTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Connector/azuredeploy.json')]",
+        "FunctionTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Function/azuredeploy.json')]",
+        "WorkbookTemplate": "[concat('https://raw.githubusercontent.com/briandelmsft/SentinelAutomationModules/', parameters('DeploymentBranch'), '/Workbook/azuredeploy.json')]",
+        "FunctionPackage": "[concat('https://github.com/briandelmsft/SentinelAutomationModules/blob/', parameters('DeploymentBranch'), '/Function/statapi.zip?raw=true')]"
     },
     "resources": [
         {
@@ -193,6 +198,9 @@
                 "parameters": {
                     "FunctionName": {
                         "value": "[parameters('STATFunctionName')]"
+                    },
+                    "FunctionPackage": {
+                        "value": "[variables('FunctionPackage')]"
                     }
                 }
             }
