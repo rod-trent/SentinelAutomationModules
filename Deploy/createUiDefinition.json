@@ -309,15 +309,6 @@
                                 "visible": true
                             },
                             {
-                                "name": "DeployConnector",
-                                "type": "Microsoft.Common.CheckBox",
-                                "label": "Deploy the STAT Logic Apps Custom Connector",
-                                "defaultValue": false,
-                                "toolTip": "",
-                                "constraints": {},
-                                "visible": true
-                            },
-                            {
                                 "name": "STATCoordinatorPlaybookName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "STAT Coordinator Playbook Name",
@@ -325,7 +316,7 @@
                                 "defaultValue": "STAT-Coordinator",
                                 "toolTip": "",
                                 "constraints": {},
-                                "visible": "[if(steps('automationModules').advancedSetup.DeployConnector, true, false)]"
+                                "visible": true
                             },
                             {
                                 "name": "CustomConnectorName",
@@ -335,7 +326,7 @@
                                 "defaultValue": "SentinelTriageAssistant",
                                 "toolTip": "",
                                 "constraints": {},
-                                "visible": "[if(steps('automationModules').advancedSetup.DeployConnector, true, false)]"
+                                "visible": true
                             },
                             {
                                 "name": "CustomConnectorDisplayName",
@@ -345,7 +336,7 @@
                                 "defaultValue": "Sentinel Triage AssistanT - STAT",
                                 "toolTip": "",
                                 "constraints": {},
-                                "visible": "[if(steps('automationModules').advancedSetup.DeployConnector, true, false)]"
+                                "visible": true
                             },
                             {
                                 "name": "DeployWorkbook",
@@ -412,7 +403,7 @@
                         "defaultValue": false,
                         "toolTip": "",
                         "constraints": {},
-                        "visible": "[or(if(steps('automationModules').advancedSetup.DeployConnector, true, false), if(equals(steps('deploymentTypeStep').deploymentType, 'standard'), true, false))]"
+                        "visible": true
                     },
                     {
                         "name": "BasicSamplePlaybookName",
@@ -422,7 +413,7 @@
                         "defaultValue": "Sample-STAT-Triage",
                         "toolTip": "",
                         "constraints": {},
-                        "visible": "[and(steps('sampleStep').DeployBasicSamplePlaybook,or(if(steps('automationModules').advancedSetup.DeployConnector, true, false), if(equals(steps('deploymentTypeStep').deploymentType, 'standard'), true, false)))]"
+                        "visible": "[if(steps('sampleStep').DeployBasicSamplePlaybook, true, false)]"
                     }
                 ]
             }
