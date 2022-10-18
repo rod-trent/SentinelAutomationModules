@@ -28,6 +28,9 @@
             "type": "integer",
             "description": "Lowest global prevalence score found"
         },
+        "ModuleName": {
+            "type": "string"
+        },
         "HashesThreatList": {
             "type": "array",
             "description" : "List of known threat for hashes parsed witht the function FileProfile()",
