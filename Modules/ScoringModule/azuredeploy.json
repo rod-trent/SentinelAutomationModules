@@ -681,7 +681,7 @@
                                                             "inputs": {
                                                                 "name": "DetailedResults",
                                                                 "value": {
-                                                                    "Score": "@mul(mul(item()['ModuleBody']['HashedInvalidSignatureCount'],5),item()['ScoreMultiplier'])",
+                                                                    "Score": "@mul(mul(item()['ModuleBody']['HashesInvalidSignatureCount'],5),item()['ScoreMultiplier'])",
                                                                     "ScoreSource": "@{items('For_each')['ScoreLabel']} - Invalid Signatures"
                                                                 }
                                                             }
@@ -691,7 +691,7 @@
                                                             "type": "IncrementVariable",
                                                             "inputs": {
                                                                 "name": "scoreTotal",
-                                                                "value": "@mul(mul(item()['ModuleBody']['HashedInvalidSignatureCount'],5),item()['ScoreMultiplier'])"
+                                                                "value": "@mul(mul(item()['ModuleBody']['HashesInvalidSignatureCount'],5),item()['ScoreMultiplier'])"
                                                             }
                                                         }
                                                     },
@@ -704,7 +704,7 @@
                                                         "and": [
                                                             {
                                                                 "greater": [
-                                                                    "@item()['ModuleBody']['HashedInvalidSignatureCount']",
+                                                                    "@item()['ModuleBody']['HashesInvalidSignatureCount']",
                                                                     0
                                                                 ]
                                                             }
@@ -1423,8 +1423,8 @@
                                                                     "inputs": {
                                                                         "name": "DetailedResults",
                                                                         "value": {
-                                                                            "Score": "@mul(item()['InvestigationPriorityMax'],item()['ScoreMultiplier'])",
-                                                                            "ScoreSource": "@{items('For_each')['ScoreLabel']} - @{item()['UserPrincipalName']}"
+                                                                            "Score": "@mul(item()['InvestigationPriorityMax'],items('For_each')['ScoreMultiplier'])",
+                                                                            "ScoreSource": "@{items('For_each')['ScoreLabel']} - @{items('For_each_UEBA')['UserPrincipalName']}"
                                                                         }
                                                                     }
                                                                 },
@@ -1433,7 +1433,7 @@
                                                                     "type": "IncrementVariable",
                                                                     "inputs": {
                                                                         "name": "scoreTotal",
-                                                                        "value": "@mul(item()['InvestigationPriorityMax'],item()['ScoreMultiplier'])"
+                                                                        "value": "@mul(item()['InvestigationPriorityMax'],items('For_each')['ScoreMultiplier'])"
                                                                     }
                                                                 }
                                                             },
