@@ -27,7 +27,8 @@
                                 "message": "You must have permission to create and update Storage Accounts"
                             }
                         ]
-                    },
+                    }
+                },
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
