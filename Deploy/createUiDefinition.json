@@ -7,11 +7,32 @@
             "isWizard": true,
             "basics": {
                 "description": "## Microsoft Sentinel Triage AssistanT (STAT) Deployment\nThe Microsoft Sentinel Triage AssistanT is designed to help build automated triages for Microsoft Sentinel Incidents to optimize the efficiency of your security operations. This deployment will allow you to deploy the necessary resources to use the STAT tool.\n ### Post Deployment \nAfter deploying this template, ensure to run the [GrantPermissions.ps1](https://github.com/briandelmsft/SentinelAutomationModules/blob/main/Deploy/GrantPermissions.ps1) script to grant permissions to the STAT modules.  It may take up to 15 minutes for the permissions to become effective.",
+                "resourceGroup": {
+                    "constraints": {
+                        "validations": [
+                            {
+                                "permission": "Microsoft.Logic/workflows/write",
+                                "message": "You must have permission to create and update Logic Apps"
+                            },
+                            {
+                                "permission": "Microsoft.Web/sites/write",
+                                "message": "You must have permission to create and update Azure Functions"
+                            },
+                            {
+                                "permission": "Microsoft.Web/serverFarms/write",
+                                "message": "You must have permission to create and update App Service Plans"
+                            },
+                            {
+                                "permission": "Microsoft.Storage/storageAccounts/write",
+                                "message": "You must have permission to create and update Storage Accounts"
+                            }
+                        ]
+                    },
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
                     "resourceTypes": [
-                        "Microsoft.Logic"
+                        "Microsoft.Logic","Microsoft.Web","Microsoft.Storage"
                     ]
                 }
             }
@@ -255,7 +276,15 @@
                                 "placeholder": "",
                                 "defaultValue": "statapi",
                                 "toolTip": "",
-                                "constraints": {},
+                                "constraints": {
+                                    "required": true,
+                                    "validations": [
+                                        {
+                                            "regex": "^[a-z0-9]{1,11}$",
+                                            "message": "Only lowercase characters and numbers are allowed, and the value must be 1-11 characters long."
+                                        }
+                                    ]
+                                },
                                 "visible": true
                             },
                             {
